@@ -1,8 +1,15 @@
+#Сopyright © 2023 Serikov Artur Aleksandrovich
+#Contact Email: artueserikov3986@gmail.com
+
 #Импорт библиотек
-import requests
+import requests, configparser
 from bs4 import BeautifulSoup
 
-url = 'http://simfpolyteh.ru/raspisanie/' #URL сайта для парсинга
+#Чтение файла конфигурации
+config = configparser.ConfigParser()
+config.read('config.ini')
+url = config["Private"]["url"] #Присваиваем токен переменной
+
 run = True #Переменная для выключения бесконечного цикла
 
 
