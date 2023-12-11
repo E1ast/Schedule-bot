@@ -1,19 +1,25 @@
+#Импорт библиотек
 import requests
 from bs4 import BeautifulSoup
 
-url = 'http://simfpolyteh.ru/raspisanie/'
-response = requests.get(url)
-soup = BeautifulSoup(response.text, 'lxml')
-
-links = soup.find_all('img')
+url = 'http://simfpolyteh.ru/raspisanie/' #URL сайта для парсинга
+run = True #Переменная для выключения бесконечного цикла
 
 
+@staticmethod #Функция парсинга
 def Pars():
-  i = 0
-  for link in links:
-      links_all = link.get('src')
-      i += 1
-      if i == 4:
-          print(link.get('src'))
+  response = requests.get(url)
+  soup = BeautifulSoup(response.text, 'lxml')
 
-Pars()
+  links = soup.find_all('img') #Фильтр
+
+  Counter = 0 #Сброс переменной счетчика
+  for link in links: 
+      links_all = link.get('src')
+      Counter += 1 #Счетчик
+      if Counter == 4: #Принтим 4-ый элемент
+          print(link.get('src')) #(link.get('src')) - фильтр
+
+#Бесконечный цикл проверки сайта:
+while run:
+  Pars() #Вызов парсера
