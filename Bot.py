@@ -74,9 +74,6 @@ def Pars():
         Pars()
     
 Pars() #Вызов парсера
-bell = open("bell.jpg", "rb")
-schedule = open("schedule.jpg", "rb")
-
 
 
 
@@ -108,9 +105,17 @@ def Start(message): #Функция, которая будем выполнен�
     bot.send_message(message.chat.id, 'Привет!', reply_markup=markup_keyboard)
     print(f"[{time}] {message.from_user.first_name} {message.from_user.last_name} (@{message.from_user.username}): использовал /start")
 
+
+@bot.message_handler(commands=['reload']) #Условия запуска функции
+def Start(message): #Функция, которая будем выполнена при условии выше
+    Pars()
+    bot.send_message(message.chat.id, 'Обновлено!', reply_markup=markup_keyboard)
+    print(f"[{time}] {message.from_user.first_name} {message.from_user.last_name} (@{message.from_user.username}): обновил данные")
+
 #Ответ на /расписание
 @bot.message_handler(commands=['расписание','schedule','пары']) #Условия запуска функции
 def Schedule(message): #Функция, которая будем выполнена при условии выше
+    schedule = open("schedule.jpg", "rb")
     bot.send_message(message.chat.id, schedule_lang)
     bot.send_photo(message.chat.id, schedule)
     print(f"[{time}] {message.from_user.first_name} {message.from_user.last_name} (@{message.from_user.username}): решил узнать расписание пар")
@@ -123,7 +128,7 @@ def Site(message): #Функция, которая будем выполнена
 
 @bot.message_handler(commands=['помошь','help','Помощь','Help']) #Условия запуска функции
 def Help(message): #Функция, которая будем выполнена при условии выше
-        bot.send_message(message.chat.id, help_lang, parse_mode = 'html')
+        bot.send_message(message.chat.id, text = help_lang, parse_mode = 'html')
         print(f"[{time}] {message.from_user.first_name} {message.from_user.last_name} (@{message.from_user.username}): воспользовался помощью")
 
 @bot.message_handler(commands=['about']) #Условия запуска функции
@@ -133,6 +138,8 @@ def About(message): #Функция, которая будем выполнен�
 
 @bot.message_handler(commands=['bell']) #Условия запуска функции
 def Bell(message): #Функция, которая будем выполнена при условии выше
+    bell = open("bell.jpg", "rb")
+
     bot.send_message(message.chat.id, bell_lang)
     bot.send_photo(message.chat.id, bell)
     print(f"[{time}] {message.from_user.first_name} {message.from_user.last_name} (@{message.from_user.username}): решил узнать расписание звонков")
@@ -167,7 +174,7 @@ def Simple_message(message):
         About(message)
 
     else:
-        bot.send_message(message.chat.id, )
+        bot.send_message(message.chat.id, "Такой команды нет :/")
         print(f"[{time}] {message.from_user.first_name} {message.from_user.last_name} (@{message.from_user.username}): ввел команду неправильно: {message.text}")
 
 
